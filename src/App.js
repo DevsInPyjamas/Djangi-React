@@ -1,27 +1,20 @@
-import React, {Component} from 'react';
-import {
-    withRouter
-} from 'react-router-dom'
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { CssBaseline, MuiThemeProvider } from "@material-ui/core";
+import { GlobalStyle } from "./App.style";
+import theme from "./App.theme";
 import Routes from "./Routes";
-import './App.css';
-
-/*
-const styles = theme=> ({
-    textField:{
-        marginLeft: theme.spacing.unit
-    }
-}
-);*/
 
 class App extends Component {
-    render() {
-        return (
-            <div className='justify-content-center'>
-            <Routes/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <GlobalStyle />
+        <Routes />
+      </MuiThemeProvider>
+    );
+  }
 }
 
 export default withRouter(App);
-

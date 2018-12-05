@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Nibba from './TableRow';
 /*
 * code adapted from: https://material-ui.com/demos/tables/
 * */
@@ -42,22 +43,15 @@ function SimpleTable(props) {
                 <TableHead>
                     <TableRow>
                         <TableCell>ID</TableCell>
-                        <TableCell numeric>Nombre</TableCell>
-                        <TableCell numeric>Manufacturer</TableCell>
-                        <TableCell numeric>ID Tipo</TableCell>
+                        <TableCell>Nombre</TableCell>
+                        <TableCell>Manufacturer</TableCell>
+                        <TableCell>ID Tipo</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows.map(row => {
                         return (
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell numeric>{row.name}</TableCell>
-                                <TableCell numeric>{row.manufacturer}</TableCell>
-                                <TableCell numeric>{row.id_type}</TableCell>
-                            </TableRow>
+                            <Nibba row={ row } key={ row.id }/>
                         );
                     })}
                 </TableBody>
