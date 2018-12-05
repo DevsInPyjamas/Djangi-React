@@ -1,43 +1,74 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.css';
+import React, { Component } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import LockIcon from "@material-ui/icons/LockOutlined";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import {Link} from "react-router-dom";
+const styles = theme => ({
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 3}px`
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%", // Fix IE11 issue.
+    marginTop: theme.spacing.unit
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3
+  }
+});
 
-export default class Home extends Component {
-    render() {
-        return (
-            <div className='justify-content-center container-fluid container'>
-                <button>
-                    <Link to='/pieces'>
-                        Boton temporal para hacer debug menor que 3
-                    </Link>
-                </button>
-                <form noValidate autoComplete="off">
-                    <div><TextField
-                        id="outlined-email-input"
-                        label="UserName"
-                        type="userName"
-                        name="userName"
-                        autoComplete="userName"
-                        margin="normal"
-                        variant="outlined"
-                    /></div>
-                    <div>
-                    <TextField
-                        id="outlined-password-input"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                        margin="normal"
-                        variant="outlined"
-                    /></div>
-                    <div>
-                    <Button variant="contained" color="primary">
-                        Join </Button></div>
-                </form>
-            </div>
-        )
-    }
+class LoginComponent extends Component {
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="headline">Sign in</Typography>
+        <form className={classes.form}>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="userName">User Name</InputLabel>
+            <Input
+              id="userName"
+              name="userName"
+              autoComplete="userName"
+              autoFocus
+            />
+          </FormControl>
+          <FormControl margin="normal" required fullWidth>
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input
+              name="password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+          </FormControl>
+          <Button
+            type="submit"
+            fullWidth
+            variant="raised"
+            color="secondary"
+            className={classes.submit}
+          >
+            Sign in
+          </Button>
+        </form>
+      </Paper>
+    );
+  }
 }
+
+export const Login = withStyles(styles)(LoginComponent);
