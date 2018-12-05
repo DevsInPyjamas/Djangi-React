@@ -9,9 +9,7 @@ export default class Home extends Component {
         return (
             <Grid className='container'>
                 <Grid columns={12} padded centered >
-
                     <form noValidate autoComplete="off">
-
                         <div><TextField
                             id="outlined-email-input"
                             label="UserName"
@@ -35,8 +33,6 @@ export default class Home extends Component {
                         <Button variant="contained" color="primary">
                             Join </Button></div>
                     </form>
-
-
                 </Grid>
             </Grid>
         )

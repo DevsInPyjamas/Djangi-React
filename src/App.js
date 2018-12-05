@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import {
-    Route, Router,
-    Switch
+    Link, withRouter
 } from 'react-router-dom'
-import Grid from '@material-ui/core/Grid';
-import Login from './Pages/Login';
-import {IntlProvider} from 'react-intl';
-
-
+import Routes from "./Routes";
 import './App.css';
 
 /*
@@ -21,16 +16,15 @@ const styles = theme=> ({
 class App extends Component {
     render() {
         return (
-            <IntlProvider locale="es">
-                <Router><div>
-                    <Grid style={{marginTop: '7em'}}>
-                        <Route exact path='/Login' component={Login}/>
-                    </Grid>
-                </div></Router>
-            </IntlProvider>
-        )
+            <div>
+                <button>
+                    <Link className="nav-link" to="/login">Login</Link>
+                </button>
+            <Routes/>
+            </div>
+        );
     }
 }
 
-export default App;
+export default withRouter(App);
 
