@@ -26,7 +26,7 @@ function createData(id, name, manufacturer, id_type) {
 }
 
 const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24),
+    createData('ICE COLD', 1, 6.0, 24),
     createData('Ice cream sandwich', 237, 9.0, 37),
     createData('Eclair', 262, 16.0, 24),
     createData('Cupcake', 305, 3.7, 67),
@@ -54,9 +54,9 @@ function SimpleTable(props) {
                                 <TableCell component="th" scope="row">
                                     {row.name}
                                 </TableCell>
-                                <TableCell numeric>{row.calories}</TableCell>
-                                <TableCell numeric>{row.fat}</TableCell>
-                                <TableCell numeric>{row.carbs}</TableCell>
+                                <TableCell numeric>{row.name}</TableCell>
+                                <TableCell numeric>{row.manufacturer}</TableCell>
+                                <TableCell numeric>{row.id_type}</TableCell>
                             </TableRow>
                         );
                     })}

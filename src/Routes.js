@@ -1,7 +1,7 @@
 import { Route } from 'react-router-dom'
 import * as React from "react";
-import Login from "./Pages/Login";
-import Pieces from "./Pages/WorkshopPieces";
+import Login from "./Components/Login";
+import Pieces from "./Components/WorkshopPieces";
 
 export default () => (
     <div>
