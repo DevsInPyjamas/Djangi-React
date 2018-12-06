@@ -4,13 +4,13 @@ import React from "react";
 
 export default ({ row }) => {
     return (
-        <TableRow key={row.id}>
+        <TableRow>
             <TableCell component="th" scope="row">
                 {row.id}
             </TableCell>
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.manufacturer}</TableCell>
-            <TableCell>{row.id_type}</TableCell>
+            <TableCell>{row.type_id.type_id}</TableCell>
         </TableRow>
     );
 }
