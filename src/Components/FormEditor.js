@@ -10,7 +10,7 @@ export default class FormEditor extends React.Component{
         super(props);
         this.state = {
             nombreValue: '',
-            manufacturer: ''
+            manufacturerValue: ''
         }
     }
 

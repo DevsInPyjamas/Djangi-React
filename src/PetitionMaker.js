@@ -1,7 +1,7 @@
 
 const API_URL = 'http://localhost:8000';
 export const getAllTypePieces = async () => {
-    const res = await fetch(`${API_URL}/all_types`);
+    const res = await fetch(`${API_URL}/all_types`, {headers: {'X-session-user': sessionStorage.getItem('logged_user')}});
     /*fetch(`${API_URL}/all_types`).then((res) => {
         Equivalent as the code above
     }) */
@@ -12,7 +12,7 @@ export const getAllTypePieces = async () => {
 };
 
 export const getAllPiecesFromConcreteType = async (id) => {
-    const res = await fetch(`${API_URL}/pieces_from_type?id=${id}`);
+    const res = await fetch(`${API_URL}/pieces_from_type?id=${id}`, {headers: {'X-session-user': sessionStorage.getItem('logged_user')}});
     if(!res.ok) {
         throw 'ERROR:\n' + res.statusText;
     }
