@@ -34,7 +34,8 @@ class PieceTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pieceFromTypeList: null
+            pieceFromTypeList: null,
+            selectedPieceId: null
         }
     }
 
@@ -55,6 +56,14 @@ class PieceTable extends React.Component {
         }
     }
 
+    handleClick = (event, id) => {
+        const { selectedPieceId } = this.state;
+        if(selectedPieceId === id) {
+            this.setState({selectedPieceId: null});
+        } else {
+            this.setState( {selectedPieceId: id});
+        }
+    };
 
     render(){
         const {classes} = this.props;
@@ -79,8 +88,21 @@ class PieceTable extends React.Component {
                             </TableHead>
                             <TableBody>
                                 {this.state.pieceFromTypeList.map(row => {
+                                    let styles = {};
+                                    if(this.state.selectedPieceId === row.id) {
+                                        styles.backgroundColor = '#24A2B6';
+                                        styles.color = '#FFF';
+                                    }
                                     return (
-                                        <Nibba row={row} key={row.id}/>
+                                        <TableRow key={row.id} row={row} onClick={ e => this.handleClick(e, row.id)}
+                                                    style={styles}>
+                                            <TableCell component="th" scope="row" style={styles}>
+                                                {row.id}
+                                            </TableCell>
+                                            <TableCell style={styles}>{row.name}</TableCell>
+                                            <TableCell style={styles}>{row.manufacturer}</TableCell>
+                                            <TableCell style={styles}>{row.type_id.type_id}</TableCell>
+                                        </TableRow>
                                     );
                                 })}
                             </TableBody>
