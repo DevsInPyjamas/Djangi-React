@@ -18,3 +18,12 @@ export const getAllPiecesFromConcreteType = async (id) => {
     }
     return await res.json();
 };
+
+export const checkLogin = async (user, password) => {
+    const res = await fetch(`${API_URL}/login`, {method: "POST", body: JSON.stringify({"name": user, "password": password})});
+    if(!res.ok) {
+        throw 'ERORR:\\n' + res.statusText;
+    }
+    return await res.json();
+    
+};
