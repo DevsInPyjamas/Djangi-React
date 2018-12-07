@@ -28,7 +28,8 @@ class PieceTable extends React.Component {
     static
     propTypes = {
         classes: PropTypes.object.isRequired,
-        pieceType: PropTypes.string.isRequired
+        pieceType: PropTypes.string.isRequired,
+        onPieceSelected: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -56,12 +57,14 @@ class PieceTable extends React.Component {
         }
     }
 
-    handleClick = (event, id) => {
+    handleClick = (event, id, name, manufacturer) => {
         const { selectedPieceId } = this.state;
         if(selectedPieceId === id) {
             this.setState({selectedPieceId: null});
+            this.props.onPieceSelected(null, null);
         } else {
             this.setState( {selectedPieceId: id});
+            this.props.onPieceSelected(name, manufacturer);
         }
     };
 
@@ -94,8 +97,9 @@ class PieceTable extends React.Component {
                                         styles.color = '#FFF';
                                     }
                                     return (
-                                        <TableRow key={row.id} row={row} onClick={ e => this.handleClick(e, row.id)}
-                                                    style={styles}>
+                                        <TableRow key={row.id} row={row} onClick={ e =>
+                                            this.handleClick(e, row.id, row.name, row.manufacturer)}
+                                                   style={styles}>
                                             <TableCell component="th" scope="row" style={styles}>
                                                 {row.id}
                                             </TableCell>

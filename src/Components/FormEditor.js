@@ -3,7 +3,8 @@ import * as PropTypes from "prop-types";
 
 export default class FormEditor extends React.Component{
     static propTypes = {
-        objectToEdit: PropTypes.object
+        name: PropTypes.string,
+        manufacturer: PropTypes.string
     };
 
     constructor(props) {
@@ -13,6 +14,32 @@ export default class FormEditor extends React.Component{
             manufacturerValue: ''
         }
     }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.name !== this.props.name) {
+            if(this.props.name === null) {
+                this.setState({
+                    nombreValue: ''
+                })
+            } else {
+                this.setState({
+                    nombreValue: this.props.name
+                })
+            }
+        }
+        if(prevProps.manufacturer !== this.props.manufacturer) {
+            if(this.props.manufacturer === null) {
+                this.setState({
+                    manufacturerValue: ''
+                })
+            } else {
+                this.setState({
+                    manufacturerValue: this.props.manufacturer
+                })
+            }
+        }
+    }
+
 
 
     nombreValueChanged = (e) => {
@@ -49,10 +76,10 @@ export default class FormEditor extends React.Component{
                 </div>
                 <div className="btn-group mb-5 mt-2" role="group" aria-label="Basic example">
                     <button type="button" className="btn btn-info">Insertar</button>
-                    <button type="button" className="btn btn-info" disabled={this.props.objectToEdit === null}>
+                    <button type="button" className="btn btn-info" disabled={this.props.name === null}>
                         Borrar
                     </button>
-                    <button type="button" className="btn btn-info" disabled={this.props.objectToEdit === null}>
+                    <button type="button" className="btn btn-info" disabled={this.props.name === null}>
                         Actualiza
                     </button>
                     <button type="button" className="btn btn-info" onClick={ this.niggaPleaseCleanUpThatShit }>

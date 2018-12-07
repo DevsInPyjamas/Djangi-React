@@ -10,13 +10,24 @@ export default class WorkshopPieces extends Component {
         super(props);
         this.state = {
             selectedPieceType: null,
-            selectedPiece: null
+            nameValue: '',
+            manufacturerValue: ''
         };
         this.onPieceTypeSelect = this.onPieceTypeSelect.bind(this);
+        this.pieceSelected = this.pieceSelected.bind(this);
     }
 
     onPieceTypeSelect(id) {
         this.setState({selectedPieceType: id})
+    }
+
+    pieceSelected(nameValue, manufacturerValue) {
+        this.setState(
+            {
+                nameValue: nameValue,
+                manufacturerValue: manufacturerValue
+            }
+        )
     }
 
     render() {
@@ -24,8 +35,10 @@ export default class WorkshopPieces extends Component {
             <div className='container'>
                 <button type="button" className="btn btn-info float-right mb-4 mt-4">Cerrar Sesión</button>
                 <PieceTypeSelecter onPieceChange={ this.onPieceTypeSelect }/>
-                {this.state.selectedPieceType !== null && <Table pieceType={ this.state.selectedPieceType }/> }
-                {this.state.selectedPieceType !== null && <FormEditor objectToEdit={ this.state.selectedPiece }/> }
+                {this.state.selectedPieceType !== null && <Table pieceType={ this.state.selectedPieceType }
+                                                                 onPieceSelected = {this.pieceSelected }/> }
+                {this.state.selectedPieceType !== null && <FormEditor name={ this.state.nameValue }
+                                                                manufacturer={ this.state.manufacturerValue }/> }
             </div>
         )
     }
