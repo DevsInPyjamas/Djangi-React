@@ -3,8 +3,8 @@ import * as PropTypes from "prop-types";
 
 export default class FormEditor extends React.Component{
     static propTypes = {
-        name: PropTypes.string,
-        manufacturer: PropTypes.string
+        piece: PropTypes.object,
+        onClear: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -16,30 +16,25 @@ export default class FormEditor extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.name !== this.props.name) {
-            if(this.props.name === null) {
+        if(this.props.piece === null && prevProps.piece !== null) {
+            this.setState({
+                nombreValue: '',
+                manufacturerValue: ''
+            })
+        }
+        if(this.props.piece !== null) {
+            if(prevProps.piece === null || prevProps.piece.name !== this.props.piece.name) {
                 this.setState({
-                    nombreValue: ''
-                })
-            } else {
-                this.setState({
-                    nombreValue: this.props.name
+                    nombreValue: this.props.piece.name
                 })
             }
-        }
-        if(prevProps.manufacturer !== this.props.manufacturer) {
-            if(this.props.manufacturer === null) {
+            if(prevProps.piece === null || prevProps.piece.manufacturer !== this.props.piece.manufacturer) {
                 this.setState({
-                    manufacturerValue: ''
-                })
-            } else {
-                this.setState({
-                    manufacturerValue: this.props.manufacturer
+                    manufacturerValue: this.props.piece.manufacturer
                 })
             }
         }
     }
-
 
 
     nombreValueChanged = (e) => {
@@ -51,7 +46,8 @@ export default class FormEditor extends React.Component{
     };
 
     niggaPleaseCleanUpThatShit = () => {
-        this.setState({nombreValue: '', manufacturerValue: ''})
+        this.setState({nombreValue: '', manufacturerValue: ''});
+        this.props.onClear();
     };
 
 
@@ -75,11 +71,11 @@ export default class FormEditor extends React.Component{
                            value={ this.state.manufacturerValue }/>
                 </div>
                 <div className="btn-group mb-5 mt-2" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-info">Insertar</button>
-                    <button type="button" className="btn btn-info" disabled={this.props.name === null}>
+                    <button type="button" className="btn btn-info" disabled={this.props.piece !== null}>Insertar</button>
+                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}>
                         Borrar
                     </button>
-                    <button type="button" className="btn btn-info" disabled={this.props.name === null}>
+                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}>
                         Actualiza
                     </button>
                     <button type="button" className="btn btn-info" onClick={ this.niggaPleaseCleanUpThatShit }>

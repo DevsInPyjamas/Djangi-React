@@ -29,14 +29,15 @@ class PieceTable extends React.Component {
     propTypes = {
         classes: PropTypes.object.isRequired,
         pieceType: PropTypes.string.isRequired,
-        onPieceSelected: PropTypes.func.isRequired
+        onPieceSelected: PropTypes.func.isRequired,
+        selectedPiece: PropTypes.object
     };
 
     constructor(props) {
         super(props);
         this.state = {
             pieceFromTypeList: null,
-            selectedPieceId: null
+            objectPieceSelected: null
         }
     }
 
@@ -55,16 +56,19 @@ class PieceTable extends React.Component {
             this.setState({pieceFromTypeList: null});
             this.loadPieces();
         }
+        if(this.props.selectedPiece !== prevProps.selectedPiece) {
+            this.setState({objectPieceSelected: this.props.selectedPiece})
+        }
     }
 
-    handleClick = (event, id, name, manufacturer) => {
-        const { selectedPieceId } = this.state;
-        if(selectedPieceId === id) {
-            this.setState({selectedPieceId: null});
-            this.props.onPieceSelected(null, null);
+    handleClick = (event, piece) => {
+        const { objectPieceSelected } = this.state;
+        if(objectPieceSelected === piece) {
+            this.setState({objectPieceSelected: null});
+            this.props.onPieceSelected(null);
         } else {
-            this.setState( {selectedPieceId: id});
-            this.props.onPieceSelected(name, manufacturer);
+            this.setState( {objectPieceSelected: piece});
+            this.props.onPieceSelected(piece);
         }
     };
 
@@ -92,13 +96,13 @@ class PieceTable extends React.Component {
                             <TableBody>
                                 {this.state.pieceFromTypeList.map(row => {
                                     let styles = {};
-                                    if(this.state.selectedPieceId === row.id) {
+                                    if(this.state.objectPieceSelected === row && this.state.objectPieceSelected !== null) {
                                         styles.backgroundColor = '#24A2B6';
                                         styles.color = '#FFF';
                                     }
                                     return (
                                         <TableRow key={row.id} row={row} onClick={ e =>
-                                            this.handleClick(e, row.id, row.name, row.manufacturer)}
+                                            this.handleClick(e, row)}
                                                    style={styles}>
                                             <TableCell component="th" scope="row" style={styles}>
                                                 {row.id}
