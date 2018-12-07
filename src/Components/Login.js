@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "react-router-dom/es/Link";
+import {checkLogin} from "../PetitionMaker.js";
 
 const styles = theme => ({
   paper: {
@@ -30,6 +31,26 @@ const styles = theme => ({
 });
 
 class LoginComponent extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      userValue: "",
+      passValue: ""
+    };
+  };
+
+  userValueChanged = (e) => {
+    this.setState({userValue: e.target.value})
+  };
+
+  passValueChanged = (e) => {
+    this.setState({passValue: e.target.value})
+  };
+
+  async login() {
+    const res = await checkLogin(this.state.userValue, this.state.passValue);
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -45,6 +66,7 @@ class LoginComponent extends Component {
               name="userName"
               autoComplete="userName"
               autoFocus
+              onChange={this.userValueChanged}
             />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
@@ -54,6 +76,7 @@ class LoginComponent extends Component {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={this.passValueChanged}
             />
           </FormControl>
           <Button
