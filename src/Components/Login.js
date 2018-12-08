@@ -6,7 +6,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Link from "react-router-dom/es/Link";
 import {checkLogin} from "../PetitionMaker.js";
 import {Redirect} from "react-router-dom";
 
@@ -54,8 +53,9 @@ class LoginComponent extends Component {
     e.preventDefault();
     this.setState({loading: true});
     try {
-      const res = await checkLogin(this.state.userValue, this.state.passValue);
-      sessionStorage.setItem('logged_user', this.state.userValue);
+      const {token, role} = await checkLogin(this.state.userValue, this.state.passValue);
+      sessionStorage.setItem('logged_user', token);
+      sessionStorage.setItem('logged_user_role', role.name);
       this.setState({loading: false, userValue: "", passValue: ""});
     } catch (e) {
       window.alert("Combinación errónea");

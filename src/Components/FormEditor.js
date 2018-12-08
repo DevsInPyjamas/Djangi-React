@@ -13,8 +13,15 @@ export default class FormEditor extends React.Component{
         super(props);
         this.state = {
             nombreValue: '',
-            manufacturerValue: ''
+            manufacturerValue: '',
+            isAdmin: false
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            isAdmin: sessionStorage.getItem('logged_user_role') === 'administrador'
+        })
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -87,13 +94,13 @@ export default class FormEditor extends React.Component{
                            value={ this.state.manufacturerValue }/>
                 </div>
                 <div className="btn-group mb-5 mt-2" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-info" disabled={this.props.piece !== null}
+                    <button type="button" className="btn btn-info" disabled={!this.state.isAdmin || this.props.piece !== null}
                             onClick={this.addClicked}>Insertar</button>
-                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}
+                    <button type="button" className="btn btn-info" disabled={!this.state.isAdmin || this.props.piece === null}
                             onClick={this.deleteClicked}>
                         Borrar
                     </button>
-                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}
+                    <button type="button" className="btn btn-info" disabled={!this.state.isAdmin || this.props.piece === null}
                             onClick={this.updateClicked}>
                         Actualiza
                     </button>
