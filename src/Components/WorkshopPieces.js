@@ -7,8 +7,7 @@ import {Redirect} from "react-router-dom";
 
 import {insertPieza} from "../PetitionMaker";
 import {updatePieza} from "../PetitionMaker";
-
-import {getAllPiecesFromConcreteType, insertPieza} from "../PetitionMaker";
+import {getAllPiecesFromConcreteType} from "../PetitionMaker";
 
 
 export default class WorkshopPieces extends Component {
@@ -31,6 +30,12 @@ export default class WorkshopPieces extends Component {
     onPieceTypeSelect(id) {
         this.setState({selectedPieceType: id});
         this.loadPieces(id);
+    }
+
+    async loadPieces(pieceType){
+        this.setState({
+            pieceFromTypeList : await getAllPiecesFromConcreteType(pieceType)
+        });
     }
 
     pieceSelected(piece) {
@@ -60,6 +65,14 @@ export default class WorkshopPieces extends Component {
     async modifyButtonClicked(name, manufacturer) {
         try{
             const res = await updatePieza(name, manufacturer, this.state.selectedPiece.id);
+            const pos = this.state.pieceFromTypeList.findIndex((piece) => piece.id === res.id);
+            this.setState({
+                pieceFromTypeList: [
+                    ...this.state.pieceFromTypeList.slice(0, pos),
+                    res,
+                    ...this.state.pieceFromTypeList.slice(pos+1)
+                ]
+            })
         }catch(e){
             window.alert("Fallo al modificar pieza.");
         }
@@ -85,7 +98,8 @@ export default class WorkshopPieces extends Component {
                                                                  selectedPiece={ this.state.selectedPiece }
                                                                  itemsList={ this.state.pieceFromTypeList }/>}
                 {this.state.selectedPieceType !== null && <FormEditor piece={ this.state.selectedPiece }
-                onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ null } onUpdateClicked={ this.modifyButtonClicked() }/>}
+                onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ null }
+                                                                      onUpdateClicked={ this.modifyButtonClicked }/>}
             </div>
         )
     }

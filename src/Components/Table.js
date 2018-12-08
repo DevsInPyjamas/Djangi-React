@@ -26,7 +26,6 @@ class PieceTable extends React.Component {
     static
     propTypes = {
         classes: PropTypes.object.isRequired,
-        pieceType: PropTypes.string.isRequired,
         onPieceSelected: PropTypes.func.isRequired,
         selectedPiece: PropTypes.object,
         itemsList: PropTypes.array

@@ -59,6 +59,10 @@ export default class FormEditor extends React.Component{
 
     updateClicked = () => {
         this.props.onUpdateClicked(this.state.nombreValue, this.state.manufacturerValue);
+        this.setState({
+            nombreValue: '',
+            manufacturerValue: ''
+        })
     };
 
 
