@@ -8,6 +8,7 @@ import {Redirect} from "react-router-dom";
 import {insertPieza} from "../PetitionMaker";
 import {updatePieza} from "../PetitionMaker";
 import {getAllPiecesFromConcreteType} from "../PetitionMaker";
+import {deletePieza} from "../PetitionMaker";
 
 
 export default class WorkshopPieces extends Component {
@@ -25,6 +26,7 @@ export default class WorkshopPieces extends Component {
         this.logOut = this.logOut.bind(this);
         this.addButtonClicked = this.addButtonClicked.bind(this);
         this.modifyButtonClicked = this.modifyButtonClicked.bind(this);
+        this.deleteButtonClicked = this.deleteButtonClicked.bind(this);
     }
 
     onPieceTypeSelect(id) {
@@ -78,6 +80,21 @@ export default class WorkshopPieces extends Component {
         }
     }
 
+    async deleteButtonClicked(){
+        try{
+            //const pos = this.state.pieceFromTypeList.findIndex((piece) => piece.id === this.state.selectedPiece.id);
+            const res = await deletePieza(this.state.selectedPiece.id);
+            /*this.setState({
+                pieceFromTypeList: [
+                    ...this.state.pieceFromTypeList.slice(0, pos),
+                    ...this.state.pieceFromTypeList.slice(pos+1)
+                ]
+            })*/
+        }catch(e){
+            window.alert("Fallo al borrar pieza");
+        }
+    }
+
     logOut(e) {
         e.preventDefault();
         sessionStorage.clear();
@@ -98,7 +115,7 @@ export default class WorkshopPieces extends Component {
                                                                  selectedPiece={ this.state.selectedPiece }
                                                                  itemsList={ this.state.pieceFromTypeList }/>}
                 {this.state.selectedPieceType !== null && <FormEditor piece={ this.state.selectedPiece }
-                onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ null }
+                onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ this.deleteButtonClicked }
                                                                       onUpdateClicked={ this.modifyButtonClicked }/>}
             </div>
         )

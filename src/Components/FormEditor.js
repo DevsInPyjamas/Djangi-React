@@ -65,6 +65,13 @@ export default class FormEditor extends React.Component{
         })
     };
 
+    deleteClicked = () => {
+        this.props.onDelete();
+        this.setState({
+            nombreValue: '',
+            manufacturerValue: ''
+        })
+    };
 
     render() {
         return(
@@ -88,7 +95,8 @@ export default class FormEditor extends React.Component{
                 <div className="btn-group mb-5 mt-2" role="group" aria-label="Basic example">
                     <button type="button" className="btn btn-info" disabled={this.props.piece !== null}
                             onClick={this.addClicked}>Insertar</button>
-                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}>
+                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}
+                            onClick={this.deleteClicked}>
                         Borrar
                     </button>
                     <button type="button" className="btn btn-info" disabled={this.props.piece === null}
