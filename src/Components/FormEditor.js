@@ -54,23 +54,17 @@ export default class FormEditor extends React.Component{
 
     addClicked = () => {
         this.props.onInsert(this.state.nombreValue, this.state.manufacturerValue);
-        this.setState({nombreValue: '', manufacturerValue: ''});
+        this.niggaPleaseCleanUpThatShit();
     };
 
     updateClicked = () => {
         this.props.onUpdateClicked(this.state.nombreValue, this.state.manufacturerValue);
-        this.setState({
-            nombreValue: '',
-            manufacturerValue: ''
-        })
+        this.niggaPleaseCleanUpThatShit();
     };
 
     deleteClicked = () => {
         this.props.onDelete();
-        this.setState({
-            nombreValue: '',
-            manufacturerValue: ''
-        })
+        this.niggaPleaseCleanUpThatShit();
     };
 
     render() {
