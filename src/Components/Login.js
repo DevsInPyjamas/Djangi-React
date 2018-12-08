@@ -53,13 +53,14 @@ class LoginComponent extends Component {
   async login(e) {
     e.preventDefault();
     this.setState({loading: true});
-    const res = await checkLogin(this.state.userValue, this.state.passValue);
-    if(res['error']) {
+    try {
+      const res = await checkLogin(this.state.userValue, this.state.passValue);
+      sessionStorage.setItem('logged_user', this.state.userValue);
+      this.setState({loading: false, userValue: "", passValue: ""});
+    } catch (e) {
       window.alert("Combinación errónea");
+      this.setState({loading: false});
     }
-    sessionStorage.setItem('logged_user', this.state.userValue);
-    this.setState({loading: false, userValue: "", passValue: ""});
-
   };
 
   render() {

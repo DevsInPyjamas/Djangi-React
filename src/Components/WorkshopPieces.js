@@ -16,6 +16,7 @@ export default class WorkshopPieces extends Component {
         this.onPieceTypeSelect = this.onPieceTypeSelect.bind(this);
         this.pieceSelected = this.pieceSelected.bind(this);
         this.deselect = this.deselect.bind(this);
+        this.logOut = this.logOut.bind(this);
     }
 
     onPieceTypeSelect(id) {
@@ -37,6 +38,7 @@ export default class WorkshopPieces extends Component {
     logOut(e) {
         e.preventDefault();
         sessionStorage.clear();
+        this.forceUpdate();
     }
 
     render() {
