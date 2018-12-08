@@ -50,7 +50,7 @@ export const updatePieza = async (nombrePieza, manufacturer, idPieza) => {
 
 export const deletePieza = async (idPieza) => {
    const res = await fetch(`${API_URL}/delete_piece?id=${idPieza}`, {method: "DELETE",
-       headers: {'X-session-user': sessionStorage.getItem('logged_user')}});
+       headers: {"X-session-user": sessionStorage.getItem("logged_user")}});
     if(!res.ok) {
         throw 'ERROR:\n' + res.statusText;
     }

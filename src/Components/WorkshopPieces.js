@@ -82,14 +82,14 @@ export default class WorkshopPieces extends Component {
 
     async deleteButtonClicked(){
         try{
-            //const pos = this.state.pieceFromTypeList.findIndex((piece) => piece.id === this.state.selectedPiece.id);
+            const pos = this.state.pieceFromTypeList.findIndex((piece) => piece.id === this.state.selectedPiece.id);
             const res = await deletePieza(this.state.selectedPiece.id);
-            /*this.setState({
+            this.setState({
                 pieceFromTypeList: [
                     ...this.state.pieceFromTypeList.slice(0, pos),
                     ...this.state.pieceFromTypeList.slice(pos+1)
                 ]
-            })*/
+            })
         }catch(e){
             window.alert("Fallo al borrar pieza");
         }
