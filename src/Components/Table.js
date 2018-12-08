@@ -7,7 +7,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {getAllPiecesFromConcreteType} from "../PetitionMaker";
 import {LoaderComponent} from "./Loader";
 /*
 * code adapted from: https://material-ui.com/demos/tables/
@@ -29,52 +28,32 @@ class PieceTable extends React.Component {
         classes: PropTypes.object.isRequired,
         pieceType: PropTypes.string.isRequired,
         onPieceSelected: PropTypes.func.isRequired,
-        selectedPiece: PropTypes.object
+        selectedPiece: PropTypes.object,
+        itemsList: PropTypes.array
     };
 
     constructor(props) {
         super(props);
         this.state = {
             pieceFromTypeList: null,
-            objectPieceSelected: null
-        }
-    }
-
-    async loadPieces(){
-        this.setState({
-            pieceFromTypeList : await getAllPiecesFromConcreteType(this.props.pieceType)
-        });
-    }
-
-    componentDidMount() {
-        this.loadPieces();
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.pieceType !== this.props.pieceType) {
-            this.setState({pieceFromTypeList: null});
-            this.loadPieces();
-        }
-        if(this.props.selectedPiece !== prevProps.selectedPiece) {
-            this.setState({objectPieceSelected: this.props.selectedPiece})
         }
     }
 
     handleClick = (event, piece) => {
-        const { objectPieceSelected } = this.state;
-        if(objectPieceSelected === piece) {
-            this.setState({objectPieceSelected: null});
+        const { selectedPiece } = this.props;
+        if(selectedPiece === piece) {
+            this.setState({selectedPiece: null});
             this.props.onPieceSelected(null);
         } else {
-            this.setState( {objectPieceSelected: piece});
+            this.setState( {selectedPiece: piece});
             this.props.onPieceSelected(piece);
         }
     };
 
     render(){
         const {classes} = this.props;
-        if(this.state.pieceFromTypeList !== null) {
-            if(this.state.pieceFromTypeList.length === 0) {
+        if(this.props.itemsList !== null) {
+            if(this.props.itemsList.length === 0) {
                 return(
                     <div className="alert alert-danger mt-4" role="alert">
                         No hay piezas de ese tipo.
@@ -93,9 +72,9 @@ class PieceTable extends React.Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {this.state.pieceFromTypeList.map(row => {
+                                {this.props.itemsList.map(row => {
                                     let styles = {};
-                                    if(this.state.objectPieceSelected === row && this.state.objectPieceSelected !== null) {
+                                    if(this.props.selectedPiece === row && this.props.selectedPiece !== null) {
                                         styles.backgroundColor = '#24A2B6';
                                         styles.color = '#FFF';
                                     }

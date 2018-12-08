@@ -4,7 +4,7 @@ import Table from './Table.js';
 import PieceTypeSelecter from './PieceTypeSelecter';
 import FormEditor from './FormEditor';
 import {Redirect} from "react-router-dom";
-import {insertPieza} from "../PetitionMaker";
+import {getAllPiecesFromConcreteType, insertPieza} from "../PetitionMaker";
 
 export default class WorkshopPieces extends Component {
 
@@ -12,7 +12,8 @@ export default class WorkshopPieces extends Component {
         super(props);
         this.state = {
             selectedPieceType: null,
-            selectedPiece: null
+            selectedPiece: null,
+            pieceFromTypeList: null
         };
         this.onPieceTypeSelect = this.onPieceTypeSelect.bind(this);
         this.pieceSelected = this.pieceSelected.bind(this);
@@ -22,7 +23,8 @@ export default class WorkshopPieces extends Component {
     }
 
     onPieceTypeSelect(id) {
-        this.setState({selectedPieceType: id})
+        this.setState({selectedPieceType: id});
+        this.loadPieces(id);
     }
 
     pieceSelected(piece) {
@@ -40,10 +42,19 @@ export default class WorkshopPieces extends Component {
     async addButtonClicked(name, manufacturer) {
         try{
             const res = await insertPieza(name, manufacturer, this.state.selectedPieceType);
+            this.setState({
+                pieceFromTypeList: this.state.pieceFromTypeList.concat(res)
+            })
         }catch (e) {
             window.alert("Fallo al introducir pieza.")
         }
 
+    }
+
+    async loadPieces(pieceType){
+        this.setState({
+            pieceFromTypeList : await getAllPiecesFromConcreteType(pieceType)
+        });
     }
 
     logOut(e) {
@@ -62,9 +73,9 @@ export default class WorkshopPieces extends Component {
             <div className='container'>
                 <button type="button" className="btn btn-info float-right mb-4 mt-4" onClick={ this.logOut }>Cerrar Sesión</button>
                 <PieceTypeSelecter onPieceChange={ this.onPieceTypeSelect }/>
-                {this.state.selectedPieceType !== null && <Table pieceType={ this.state.selectedPieceType }
-                                                                 onPieceSelected = { this.pieceSelected }
-                                                                 selectedPiece={ this.state.selectedPiece }/> }
+                {this.state.selectedPieceType !== null && <Table onPieceSelected = { this.pieceSelected }
+                                                                 selectedPiece={ this.state.selectedPiece }
+                                                                 itemsList={ this.state.pieceFromTypeList }/>}
                 {this.state.selectedPieceType !== null && <FormEditor piece={ this.state.selectedPiece }
                 onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ null } onUpdate={ null }/>}
             </div>
