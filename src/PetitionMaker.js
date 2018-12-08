@@ -46,4 +46,4 @@ export const updatePieza = async (nombrePieza, manufacturer, idPieza) => {
         throw 'ERORR:\\n' + res.statusText;
     }
     return await res.json();
-}
+};
