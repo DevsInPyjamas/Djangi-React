@@ -5,7 +5,8 @@ export default class FormEditor extends React.Component{
     static propTypes = {
         piece: PropTypes.object,
         onClear: PropTypes.func.isRequired,
-        onInsert: PropTypes.func.isRequired
+        onInsert: PropTypes.func.isRequired,
+        onUpdateClicked: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -56,6 +57,10 @@ export default class FormEditor extends React.Component{
         this.setState({nombreValue: '', manufacturerValue: ''});
     };
 
+    updateClicked = () => {
+        this.props.onUpdateClicked(this.state.nombreValue, this.state.manufacturerValue);
+    };
+
 
     render() {
         return(
@@ -82,7 +87,8 @@ export default class FormEditor extends React.Component{
                     <button type="button" className="btn btn-info" disabled={this.props.piece === null}>
                         Borrar
                     </button>
-                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}>
+                    <button type="button" className="btn btn-info" disabled={this.props.piece === null}
+                            onClick={this.updateClicked}>
                         Actualiza
                     </button>
                     <button type="button" className="btn btn-info" onClick={ this.niggaPleaseCleanUpThatShit }>

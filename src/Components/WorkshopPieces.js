@@ -5,6 +5,7 @@ import PieceTypeSelecter from './PieceTypeSelecter';
 import FormEditor from './FormEditor';
 import {Redirect} from "react-router-dom";
 import {insertPieza} from "../PetitionMaker";
+import {updatePieza} from "../PetitionMaker";
 
 export default class WorkshopPieces extends Component {
 
@@ -19,6 +20,7 @@ export default class WorkshopPieces extends Component {
         this.deselect = this.deselect.bind(this);
         this.logOut = this.logOut.bind(this);
         this.addButtonClicked = this.addButtonClicked.bind(this);
+        this.modifyButtonClicked = this.modifyButtonClicked.bind(this);
     }
 
     onPieceTypeSelect(id) {
@@ -41,9 +43,17 @@ export default class WorkshopPieces extends Component {
         try{
             const res = await insertPieza(name, manufacturer, this.state.selectedPieceType);
         }catch (e) {
-            window.alert("Fallo al introducir pieza.")
+            window.alert("Fallo al introducir pieza.");
         }
 
+    }
+
+    async modifyButtonClicked(name, manufacturer) {
+        try{
+            const res = await updatePieza(name, manufacturer, this.state.selectedPiece.id);
+        }catch(e){
+            window.alert("Fallo al modificar pieza.");
+        }
     }
 
     logOut(e) {
@@ -66,7 +76,7 @@ export default class WorkshopPieces extends Component {
                                                                  onPieceSelected = { this.pieceSelected }
                                                                  selectedPiece={ this.state.selectedPiece }/> }
                 {this.state.selectedPieceType !== null && <FormEditor piece={ this.state.selectedPiece }
-                onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ null } onUpdate={ null }/>}
+                onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ null } onUpdateClicked={ this.modifyButtonClicked() }/>}
             </div>
         )
     }
