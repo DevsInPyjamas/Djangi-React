@@ -41,7 +41,7 @@ export const insertPieza = async (nombrePieza, manufacturer, tipoPieza) => {
 export const updatePieza = async (nombrePieza, manufacturer, idPieza) => {
     const res = await fetch(`${API_URL}/modify_piece`, {method: "POST", headers:
             {"X-session-user": sessionStorage.getItem("logged_user")}, body:
-            JSON.stringify({"name": nombrePieza, "manufacturer": manufacturer, "id": idPieza})})
+            JSON.stringify({"name": nombrePieza, "manufacturer": manufacturer, "id": idPieza})});
     if(!res.ok) {
         throw 'ERORR:\\n' + res.statusText;
     }
