@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Table from './Table.js';
 import PieceTypeSelecter from './PieceTypeSelecter';
 import FormEditor from './FormEditor';
+import {Redirect} from "react-router-dom";
 
 export default class WorkshopPieces extends Component {
 
@@ -33,10 +34,20 @@ export default class WorkshopPieces extends Component {
         this.pieceSelected(null);
     }
 
+    logOut(e) {
+        e.preventDefault();
+        sessionStorage.clear();
+    }
+
     render() {
+        if(sessionStorage.getItem('logged_user') === null) {
+            return (
+                <Redirect to='/'/>
+            )
+        }
         return (
             <div className='container'>
-                <button type="button" className="btn btn-info float-right mb-4 mt-4">Cerrar Sesión</button>
+                <button type="button" className="btn btn-info float-right mb-4 mt-4" onClick={ this.logOut }>Cerrar Sesión</button>
                 <PieceTypeSelecter onPieceChange={ this.onPieceTypeSelect }/>
                 {this.state.selectedPieceType !== null && <Table pieceType={ this.state.selectedPieceType }
                                                                  onPieceSelected = { this.pieceSelected }

@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { getAllTypePieces } from '../PetitionMaker';
 import { LoaderComponent } from './Loader.js';
+import {Redirect} from "react-router-dom";
 /*
 * code adapted from: https://material-ui.com/demos/tables/
 * */

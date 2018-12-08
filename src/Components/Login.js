@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "react-router-dom/es/Link";
 import {checkLogin} from "../PetitionMaker.js";
+import {Redirect} from "react-router-dom";
 
 const styles = theme => ({
   paper: {
@@ -35,8 +36,10 @@ class LoginComponent extends Component {
     super(props);
     this.state = {
       userValue: "",
-      passValue: ""
+      passValue: "",
+      loading: null
     };
+    this.login = this.login.bind(this);
   };
 
   userValueChanged = (e) => {
@@ -47,16 +50,27 @@ class LoginComponent extends Component {
     this.setState({passValue: e.target.value})
   };
 
-  async login() {
+  async login(e) {
+    e.preventDefault();
+    this.setState({loading: true});
     const res = await checkLogin(this.state.userValue, this.state.passValue);
+    if(res['error']) {
+      window.alert("Combinación errónea");
+    }
+    sessionStorage.setItem('logged_user', this.state.userValue);
+    this.setState({loading: false, userValue: "", passValue: ""});
+
   };
 
   render() {
     const { classes } = this.props;
-
+    if(sessionStorage.getItem('logged_user') !== null) {
+      return(
+        <Redirect to='/pieces'/>
+      );
+    }
     return (
       <Paper className={classes.paper}>
-        <button><Link to='/pieces'>DEBUG TASKS</Link></button>
         <Typography variant="headline">Sign in</Typography>
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>
@@ -82,10 +96,11 @@ class LoginComponent extends Component {
           <Button
             type="submit"
             fullWidth
-            variant="raised"
-            color="secondary"
+            variant="contained"
+            color="primary"
+            disabled={this.state.loading}
             className={classes.submit}
-          >
+            onClick={ this.login }>
             Sign in
           </Button>
         </form>
