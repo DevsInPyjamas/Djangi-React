@@ -27,3 +27,13 @@ export const checkLogin = async (user, password) => {
     }
     return await res.json();
 };
+
+export const insertPieza = async (nombrePieza, manufacturer, tipoPieza) => {
+    const res = await fetch(`${API_URL}/new_piece`, {method: "POST", headers:
+            {"X-session-user": sessionStorage.getItem("logged_user")}, body:
+            JSON.stringify({"type_id": tipoPieza, "name": nombrePieza, "manufacturer": manufacturer})});
+    if(!res.ok) {
+        throw 'ERORR:\\n' + res.statusText;
+    }
+    return await res.json();
+};

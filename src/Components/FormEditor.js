@@ -4,7 +4,8 @@ import * as PropTypes from "prop-types";
 export default class FormEditor extends React.Component{
     static propTypes = {
         piece: PropTypes.object,
-        onClear: PropTypes.func.isRequired
+        onClear: PropTypes.func.isRequired,
+        onInsert: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -50,6 +51,11 @@ export default class FormEditor extends React.Component{
         this.props.onClear();
     };
 
+    addClicked = () => {
+        this.props.onInsert(this.state.nombreValue, this.state.manufacturerValue);
+        this.setState({nombreValue: '', manufacturerValue: ''});
+    };
+
 
     render() {
         return(
@@ -71,7 +77,8 @@ export default class FormEditor extends React.Component{
                            value={ this.state.manufacturerValue }/>
                 </div>
                 <div className="btn-group mb-5 mt-2" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-info" disabled={this.props.piece !== null}>Insertar</button>
+                    <button type="button" className="btn btn-info" disabled={this.props.piece !== null}
+                            onClick={this.addClicked}>Insertar</button>
                     <button type="button" className="btn btn-info" disabled={this.props.piece === null}>
                         Borrar
                     </button>

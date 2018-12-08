@@ -4,6 +4,7 @@ import Table from './Table.js';
 import PieceTypeSelecter from './PieceTypeSelecter';
 import FormEditor from './FormEditor';
 import {Redirect} from "react-router-dom";
+import {insertPieza} from "../PetitionMaker";
 
 export default class WorkshopPieces extends Component {
 
@@ -17,6 +18,7 @@ export default class WorkshopPieces extends Component {
         this.pieceSelected = this.pieceSelected.bind(this);
         this.deselect = this.deselect.bind(this);
         this.logOut = this.logOut.bind(this);
+        this.addButtonClicked = this.addButtonClicked.bind(this);
     }
 
     onPieceTypeSelect(id) {
@@ -33,6 +35,15 @@ export default class WorkshopPieces extends Component {
 
     deselect() {
         this.pieceSelected(null);
+    }
+
+    async addButtonClicked(name, manufacturer) {
+        try{
+            const res = await insertPieza(name, manufacturer, this.state.selectedPieceType);
+        }catch (e) {
+            window.alert("Fallo al introducir pieza.")
+        }
+
     }
 
     logOut(e) {
@@ -55,7 +66,7 @@ export default class WorkshopPieces extends Component {
                                                                  onPieceSelected = { this.pieceSelected }
                                                                  selectedPiece={ this.state.selectedPiece }/> }
                 {this.state.selectedPieceType !== null && <FormEditor piece={ this.state.selectedPiece }
-                onClear={ this.deselect } onInsert={ null } onDelete={ null } onUpdate={ null }/>}
+                onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ null } onUpdate={ null }/>}
             </div>
         )
     }
