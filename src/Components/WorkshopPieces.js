@@ -29,12 +29,19 @@ export default class WorkshopPieces extends Component {
         this.deleteButtonClicked = this.deleteButtonClicked.bind(this);
     }
 
+    componentDidMount() {
+        this.isAdmin = sessionStorage.getItem('logged_user_role') === 'administrador';
+    }
+
     onPieceTypeSelect(id) {
         this.setState({selectedPieceType: id});
         this.loadPieces(id);
     }
 
     async loadPieces(pieceType){
+        this.setState({
+            pieceFromTypeList: null
+            });
         this.setState({
             pieceFromTypeList : await getAllPiecesFromConcreteType(pieceType)
         });
@@ -101,6 +108,7 @@ export default class WorkshopPieces extends Component {
         this.forceUpdate();
     }
 
+
     render() {
         if(sessionStorage.getItem('logged_user') === null) {
             return (
@@ -113,13 +121,13 @@ export default class WorkshopPieces extends Component {
             )
         }
         return (
-            <div className='container'>
+            <div className='container mb-4'>
                 <button type="button" className="btn btn-info float-right mb-4 mt-4" onClick={ this.logOut }>Cerrar Sesión</button>
                 <PieceTypeSelecter onPieceChange={ this.onPieceTypeSelect }/>
                 {this.state.selectedPieceType !== null && <Table onPieceSelected = { this.pieceSelected }
                                                                  selectedPiece={ this.state.selectedPiece }
                                                                  itemsList={ this.state.pieceFromTypeList }/>}
-                {this.state.selectedPieceType !== null && <FormEditor piece={ this.state.selectedPiece }
+                {this.state.selectedPieceType !== null && this.isAdmin && <FormEditor piece={ this.state.selectedPiece }
                 onClear={ this.deselect } onInsert={ this.addButtonClicked } onDelete={ this.deleteButtonClicked }
                                                                       onUpdateClicked={ this.modifyButtonClicked }/>}
             </div>
