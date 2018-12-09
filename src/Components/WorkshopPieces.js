@@ -115,11 +115,6 @@ export default class WorkshopPieces extends Component {
                 <Redirect to='/'/>
             )
         }
-        if(sessionStorage.getItem('logged_user_role') === 'invitado') {
-            return(
-                <Redirect to={'/no_permission'}/>
-            )
-        }
         return (
             <div className='container mb-4'>
                 <button type="button" className="btn btn-info float-right mb-4 mt-4" onClick={ this.logOut }>Cerrar Sesión</button>
