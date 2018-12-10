@@ -6,8 +6,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
-import {checkLogin} from "../PetitionMaker.js";
-import {Redirect} from "react-router-dom";
+import { checkLogin } from "../PetitionMaker.js";
+import { Redirect } from "react-router-dom";
 
 const styles = theme => ({
   paper: {
@@ -22,6 +22,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   form: {
+    height: "100%",
     width: "100%", // Fix IE11 issue.
     marginTop: theme.spacing.unit
   },
@@ -31,7 +32,7 @@ const styles = theme => ({
 });
 
 class LoginComponent extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       userValue: "",
@@ -39,36 +40,37 @@ class LoginComponent extends Component {
       loading: null
     };
     this.login = this.login.bind(this);
+  }
+
+  userValueChanged = e => {
+    this.setState({ userValue: e.target.value });
   };
 
-  userValueChanged = (e) => {
-    this.setState({userValue: e.target.value})
-  };
-
-  passValueChanged = (e) => {
-    this.setState({passValue: e.target.value})
+  passValueChanged = e => {
+    this.setState({ passValue: e.target.value });
   };
 
   async login(e) {
     e.preventDefault();
-    this.setState({loading: true});
+    this.setState({ loading: true });
     try {
-      const {token, role} = await checkLogin(this.state.userValue, this.state.passValue);
-      sessionStorage.setItem('logged_user', token);
-      sessionStorage.setItem('logged_user_role', role.name);
-      this.setState({loading: false, userValue: "", passValue: ""});
+      const { token, role } = await checkLogin(
+        this.state.userValue,
+        this.state.passValue
+      );
+      sessionStorage.setItem("logged_user", token);
+      sessionStorage.setItem("logged_user_role", role.name);
+      this.setState({ loading: false, userValue: "", passValue: "" });
     } catch (e) {
       window.alert("Combinación errónea");
-      this.setState({loading: false});
+      this.setState({ loading: false });
     }
-  };
+  }
 
   render() {
     const { classes } = this.props;
-    if(sessionStorage.getItem('logged_user') !== null) {
-      return(
-        <Redirect to='/pieces'/>
-      );
+    if (sessionStorage.getItem("logged_user") !== null) {
+      return <Redirect to="/pieces" />;
     }
     return (
       <Paper className={classes.paper}>
@@ -101,7 +103,8 @@ class LoginComponent extends Component {
             color="primary"
             disabled={this.state.loading}
             className={classes.submit}
-            onClick={ this.login }>
+            onClick={this.login}
+          >
             Sign in
           </Button>
         </form>
