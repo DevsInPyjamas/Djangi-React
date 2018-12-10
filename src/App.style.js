@@ -8,5 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     }
     #root {
         height:100%;
+        
+        
     }
 `;

@@ -10,6 +10,8 @@ export default class BackgroundComponent extends Component {
             number: {
               value: 100
             },
+            width: "100%",
+            height: "100%",
             size: {
               value: 3
             }
